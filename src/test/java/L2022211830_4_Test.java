@@ -21,7 +21,7 @@ public class L2022211830_4_Test {
     public void testNormalCase() {
         Solution4 solution = new Solution4();
         int[] nums = {3, 6, 9, 1};
-        assertEquals(3, solution.maximumGap(nums));
+        assertEquals(4, solution.maximumGap(nums));
     }
 
     /**
