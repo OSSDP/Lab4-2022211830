@@ -1,5 +1,11 @@
 name: tests
-on: push
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   run_tests:
@@ -27,3 +33,11 @@ jobs:
       # 使用 Maven 运行测试
       - name: Run tests with Maven
         run: mvn -B test --file pom.xml
+
+      # 如果测试成功，则自动合并 PR
+      - name: Auto-merge PR
+        if: github.event_name == 'pull_request' && success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr merge ${{ github.event.pull_request.number }} --merge --auto --squash
